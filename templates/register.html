@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}რეგისტრაცია - თიბისი{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0" style="border-radius: 20px;">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <a href="https://tbcbank.ge/ka/tbc-education/tech-school" target="_blank">
+                        <img src="{{ url_for('static', filename='tbc-logo.png') }}" 
+                             alt="თიბისი ლოგო" 
+                             style="max-height: 150px;"
+                             class="mb-3">
+                    </a>
+                    <h2 class="fw-bold" style="color: #00AEEF;">📝 რეგისტრაცია</h2>
+                    <p class="text-muted">შექმენით ახალი ანგარიში</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label fw-semibold") }}
+                        {{ form.username(class="form-control form-control-lg", placeholder="მინიმუმ 3 სიმბოლო") }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.password.label(class="form-label fw-semibold") }}
+                        {{ form.password(class="form-control form-control-lg", placeholder="მინიმუმ 6 სიმბოლო") }}
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form.confirm_password.label(class="form-label fw-semibold") }}
+                        {{ form.confirm_password(class="form-control form-control-lg", placeholder="გაიმეორეთ პაროლი") }}
+                        {% if form.confirm_password.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.confirm_password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-lg w-100 text-white fw-bold" 
+                            style="background: linear-gradient(135deg, #00AEEF 0%, #0066B3 100%);">
+                        რეგისტრაცია
+                    </button>
+                </form>
+
+                <hr class="my-4">
+
+                <div class="text-center">
+                    <p class="text-muted mb-2">უკვე გაქვთ ანგარიში?</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">
+                        🔐 შესვლა
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.card {
+    animation: slideIn 0.5s ease;
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %}

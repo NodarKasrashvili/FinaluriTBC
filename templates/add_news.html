@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}სიახლის დამატება - თიბისი{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-7">
+        <div class="card shadow-lg border-0" style="border-radius: 20px;">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold" style="color: #00AEEF;">📰 ახალი სიახლის დამატება</h2>
+                    <p class="text-muted">შეავსეთ ყველა ველი და დაამატეთ ფოტო</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('add_news') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label fw-semibold") }}
+                        {{ form.title(class="form-control form-control-lg", placeholder="შეიყვანეთ სიახლის სათაური") }}
+                        {% if form.title.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.title.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.category.label(class="form-label fw-semibold") }}
+                        {{ form.category(class="form-select form-select-lg") }}
+                        {% if form.category.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.category.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.content.label(class="form-label fw-semibold") }}
+                        {{ form.content(class="form-control", rows="8", placeholder="დაწერეთ სიახლის შინაარსი...") }}
+                        {% if form.content.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.content.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- ფოტოს ატვირთვა -->
+                    <div class="mb-4">
+                        {{ form.image.label(class="form-label fw-semibold") }}
+                        <div class="border rounded p-3 bg-light">
+                            {{ form.image(class="form-control", accept="image/*") }}
+                            <small class="text-muted d-block mt-2">
+                                ✅ ფორმატები: JPG, PNG, GIF | 📏 მაქსიმუმ: 5MB
+                            </small>
+                            {% if form.image.errors %}
+                                <div class="text-danger small mt-1">
+                                    {% for error in form.image.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-lg text-white fw-bold" 
+                                style="background: linear-gradient(135deg, #00AEEF 0%, #0066B3 100%);">
+                            🚀 გამოქვეყნება
+                        </button>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg">
+                            ← უკან დაბრუნება
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.card {
+    animation: slideIn 0.5s ease;
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %}
